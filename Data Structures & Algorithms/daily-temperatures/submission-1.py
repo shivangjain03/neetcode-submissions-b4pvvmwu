@@ -1,18 +1,15 @@
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
-        n = len(temperatures)
-        # Dec Monotonic stack
-        st = [] # Storing index
-        result = [0]*n # Result list 
-        for i in range(n):
-            while st and temperatures[i]>temperatures[st[-1]]:
-                prev_index = st.pop()
-                result[prev_index] = i-prev_index
-
-            st.append(i)
-        return result
-            
-
-
-
+        res = [0]*len(temperatures)
+        st = []
+        for i in range(len(temperatures)):
+            if len(st) == 0:
+                st.append(i)
+            else:
+                while st and temperatures[i]>temperatures[st[-1]]:
+                    res[st[-1]] = i-st[-1]
+                    st.pop()
+                
+                st.append(i)
         
+        return res
